@@ -55,17 +55,35 @@ namespace BuberBreakfast.Controller
 
         [HttpPut]
         [Route("{id:guid}")]
-        public IActionResult UpsertBreakfast(Guid id,   UpsertBreakfastRequest request)
+        public IActionResult UpsertBreakfast(Guid id,  [FromBody] UpsertBreakfastRequest request)
         {
-            return Ok(request);
+            var breakfast = new Breakfast(
+                id,
+                request.Name,
+                request.Description,
+                request.StartDateTime,
+                request.EndDateTime,
+                request.Savory,
+                request.Sweet);
 
+            int flag = _breakfastService.UpdateBreakfast(id, breakfast);
+
+            if (flag == 0)
+            {
+                return CreatedAtAction(nameof(GetBreakfast), new { id = breakfast.Id }, breakfast);
+            }
+            else
+            {
+                return NoContent();
+            }
         }
 
         [HttpDelete]
         [Route("{id:guid}")]
         public IActionResult DeleteBreakfast(Guid id)
         {
-            return Ok(id);
+            _breakfastService.DeleteBreakfast(id);
+            return NoContent();
 
         }
     }

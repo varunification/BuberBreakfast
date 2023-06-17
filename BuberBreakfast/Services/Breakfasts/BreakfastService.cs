@@ -28,5 +28,27 @@ namespace BuberBreakfast.Services.Breakfasts
 
 
         }
+
+        public int UpdateBreakfast(Guid id, Breakfast breakfast)
+        {
+            if (_breakfasts.ContainsKey(id))
+            {
+                _breakfasts[id] = breakfast;
+                return 1;
+            }
+            else
+            {
+                _breakfasts.Add(id, breakfast);
+                return 0;
+            }
+        }
+
+        public void DeleteBreakfast(Guid id)
+        {
+            if (_breakfasts.ContainsKey(id))
+            {
+                _breakfasts.Remove(id);
+            }
+        }
     }
 }
