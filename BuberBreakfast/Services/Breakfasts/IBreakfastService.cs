@@ -1,5 +1,6 @@
 ﻿using BooberBreakfast.Contracts.Breakfast;
 using BuberBreakfast.Models;
+using ErrorOr;
 
 namespace BuberBreakfast.Services.Breakfasts
 {
@@ -7,7 +8,7 @@ namespace BuberBreakfast.Services.Breakfasts
     {
         public void CreateBreakfast(Breakfast breakfast);
 
-        public Breakfast GetBreakfast(Guid id);
+        public ErrorOr<Breakfast> GetBreakfast(Guid id);
         public int UpdateBreakfast(Guid id, Breakfast breakfast);
         void DeleteBreakfast(Guid id);
     }

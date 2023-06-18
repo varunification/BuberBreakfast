@@ -1,4 +1,6 @@
 ﻿using BuberBreakfast.Models;
+using BuberBreakfast.ServiceErrors;
+using ErrorOr;
 
 namespace BuberBreakfast.Services.Breakfasts
 {
@@ -12,7 +14,7 @@ namespace BuberBreakfast.Services.Breakfasts
 
         }
 
-        public Breakfast GetBreakfast(Guid id)
+        public ErrorOr<Breakfast> GetBreakfast(Guid id)
         {
             if(id.Equals(Guid.Empty))
             {
@@ -24,7 +26,7 @@ namespace BuberBreakfast.Services.Breakfasts
                 return _breakfasts[id];
             }
 
-            throw new KeyNotFoundException($"Breakfast with ID {id} not found.");
+            return Errors.Breakfast.Notfound;
 
 
         }
