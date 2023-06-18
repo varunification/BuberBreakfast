@@ -1,4 +1,5 @@
-﻿using BooberBreakfast.Contracts.Breakfast;
+﻿using AutoMapper;
+using BooberBreakfast.Contracts.Breakfast;
 using BuberBreakfast.Models;
 using BuberBreakfast.ServiceErrors;
 using BuberBreakfast.Services.Breakfasts;
@@ -11,11 +12,12 @@ namespace BuberBreakfast.Controller
     public class BreakfastsController :ControllerBase
     {
         private readonly IBreakfastService _breakfastService;
-       
+        private readonly IMapper _mapper;
 
-        public BreakfastsController(IBreakfastService breakfastService)
+        public BreakfastsController(IBreakfastService breakfastService, IMapper mapper)
         {
             _breakfastService = breakfastService;
+            _mapper = mapper;
         }
         [HttpPost]
         public IActionResult CreateBreakfast([FromBody]CreateBreakfastRequest request)
@@ -32,15 +34,7 @@ namespace BuberBreakfast.Controller
 
             // save breakfast to databaseu 
             _breakfastService.CreateBreakfast(breakfasts);
-            var response = new BreakfastResponse(
-                breakfasts.Id,
-                breakfasts.Name,
-                breakfasts.Description,
-                breakfasts.StartDateTime,
-                breakfasts.LastModifiedDateTime,
-                breakfasts.Savory,
-                breakfasts.Sweet
-                );
+            var response = _mapper.Map<BreakfastResponse>(breakfasts);
 
             return CreatedAtAction(nameof(GetBreakfast), new { id = breakfasts.Id }, breakfasts);
         }

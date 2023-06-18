@@ -27,8 +27,6 @@ namespace BuberBreakfast.Services.Breakfasts
             }
 
             return Errors.Breakfast.Notfound;
-
-
         }
 
         public int UpdateBreakfast(Guid id, Breakfast breakfast)
